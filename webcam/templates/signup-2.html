@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Please work</title>
+</head>
+<body>
+
+	<form method="POST" enctype="multipart/form-data" id="myForm">
+        <table>
+            <tr>
+                <td>Name : </td>
+                <td>:  <input type="text" name="userID"></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="SendtoFLask" onclick="upload()"></td>
+            </tr>
+        </table>
+    </form>
+	<!-- Stream video via webcam -->
+	<div class="video-wrap">
+		<video id="video" playsinline autoplay="true"> </video>
+	</div>
+
+	<!-- Trigger canvas web API -->
+	<div class="controller">
+		<button id="snap">Capture</button>
+	</div>
+
+	<!-- Webcam video snapshot -->
+	<canvas id="canvas" width="640" height="480"></canvas>
+
+
+	<script>
+
+		'use strict';
+		const video = document.getElementById('video');
+		const canvas = document.getElementById('canvas');
+		const snap = document.getElementById('snap');
+		const errorMsgElement = document.getElementById('span#ErrorMsg');
+
+		const constraints = {
+			video :{
+				width: 1280, height: 720
+			}
+		};
+
+
+		//Access Webcam
+		async function init(){
+			try{
+				const stream = await navigator.mediaDevices.getUserMedia(constraints);
+				handleSuccess(stream);
+			}
+			catch(e){
+				errorMsgElement.innerHTML = `navigator.getUserMedia.error:${e.toString()}`;
+			}
+		}
+
+		//success
+		function handleSuccess(stream){
+			window.stream = stream;
+			video.srcObject = stream;
+		}
+
+		//load init
+		init();
+
+		//Draw image
+		var context = canvas.getContext('2d');
+		snap.addEventListener("click",function () {
+			context.drawImage(video, 0,0,640,480);
+		});
+
+		function upload() {
+    	console.log("Uploading...")
+    	var image = document.getElementById('canvas').toDataURL();
+    	var form = document.getElementById('myForm');
+    	var formData = new FormData(form);
+    	formData.append("file", image);
+    	var xmlhttp = new XMLHttpRequest();
+    	xmlhttp.open("POST", "/handleimage");
+
+    	// check when state changes, 
+    	xmlhttp.onreadystatechange = function() {
+
+    if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        alert(xmlhttp.responseText);
+        }
+    }
+
+    xmlhttp.send(formData);
+    console.log(formData.get('file'));
+    console.log(formData.get('userID'));
+}
+
+	</script>
+
+</body>
+</html>
