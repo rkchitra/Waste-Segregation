@@ -2,32 +2,32 @@
 <html>
 <head>
 	<title>Please work</title>
+	<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
 </head>
 <body>
 
 	<form method="POST" enctype="multipart/form-data" id="myForm">
-        <table>
-            <tr>
-                <td>Name : </td>
-                <td>:  <input type="text" name="userID"></td>
-            </tr>
-            <tr>
-                <td><input type="button" value="SendtoFLask" onclick="upload()"></td>
-            </tr>
-        </table>
     </form>
 	<!-- Stream video via webcam -->
+	<div class="container" style="margin-left: 350px;margin-top: 50px">
+		<h1 style="margin-left: 20px"> Automated Waste Segregation </h1>
+
 	<div class="video-wrap">
-		<video id="video" playsinline autoplay="true"> </video>
+		<video id="video" playsinline autoplay="true" style="border: 3px solid black;"> </video>
 	</div>
 
 	<!-- Trigger canvas web API -->
 	<div class="controller">
-		<button id="snap">Capture</button>
+		<button id="snap" class="btn btn-primary">Capture</button>
+		<input type="button" value="Submit" class="btn btn-dark" onclick="upload()">
+
 	</div>
 
 	<!-- Webcam video snapshot -->
 	<canvas id="canvas" width="640" height="480"></canvas>
+	</div>
 
 
 	<script>
@@ -76,7 +76,7 @@
     	var image = document.getElementById('canvas').toDataURL();
     	var form = document.getElementById('myForm');
     	var formData = new FormData(form);
-    	formData.append("file", image);
+    	formData.append("file", image); //key-value pair
     	var xmlhttp = new XMLHttpRequest();
     	xmlhttp.open("POST", "/handleimage");
 

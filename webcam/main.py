@@ -9,7 +9,6 @@ def index():
 @app.route('/handleimage',methods =['POST'])
 def handleimage():
     if request.method == 'POST':
-        print(request.form['userID'])
         print(type(request.form['file']))
         print("here")
         with open('sample.png', 'wb') as f:
