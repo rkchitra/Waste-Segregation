@@ -13,7 +13,7 @@ def handleimage():
         print("here")
         with open('sample.png', 'wb') as f:
             f.write(base64.decodebytes(request.form['file'].split(',')[1].encode()))
-        return "Image url recieved , check console, also file wwwritten in PC hopefully"
+        return "Image url recieved , check console"
     return "Get not allowed"
 if __name__ == "__main__":
     app.run(debug=True)
