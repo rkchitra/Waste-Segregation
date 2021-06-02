@@ -3,6 +3,7 @@ import time
 arduino = serial.Serial(port='COM8', baudrate=9600, timeout=.1) 
 print("Setting up arduino....")
 time.sleep(4)
+print(arduino)
 print("Arduino connected")
 def left():
 	arduino.write(b'1')
