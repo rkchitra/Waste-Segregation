@@ -8,6 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .modal-backdrop {
+  z-index: -1;
+}
+    </style>
 
     <title>Capture Image</title>
 
@@ -80,6 +86,8 @@ https://templatemo.com/tm-543-breezed
             <div >
              
                 <br><br>
+                <!-- Button trigger modal -->
+
                 <form method="POST" enctype="multipart/form-data" id="myForm">
                 </form>
                 <!-- Stream video via webcam -->
@@ -89,22 +97,43 @@ https://templatemo.com/tm-543-breezed
                 <div class="video-wrap">
                     <video id="video" playsinline autoplay="true"> </video>
                 </div>
-    
+                    
             
                 <!-- Trigger canvas web API -->
                 <div class="controller" style="margin-top: 20px;  margin-right: 500px;">
                    
-                    <button id="snap" class="btn btn-primary btn-lg" >Capture</button> &nbsp; &nbsp; 
-                    <input type="button" value="Submit" class="btn btn-success btn-lg" onclick="upload()">
-        
-            
+                   <!-- Button to trigger Modal -->
+                    <button id="snap" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" onclick="modal_fun()">Capture</button> &nbsp; &nbsp;        
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title" id="exampleModalLabel" style="text-align: center;">Image Captured</h1>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <!-- Webcam video snapshot -->
+                    <canvas id="canvas" width="640" height="480"></canvas>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Re-take</button>
+                            <input type="button" value="Submit" class="btn btn-success" onclick="upload()">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    
                 </div> <br><br>
             
-                <!-- Webcam video snapshot -->
-                <canvas id="canvas" width="640" height="480"></canvas>
+                
                 </div>
             
-            s
                 <script>
             
                     'use strict';
@@ -119,7 +148,12 @@ https://templatemo.com/tm-543-breezed
                         }
                     };
             
-            
+
+                    function modal_fun() {
+                        $('#exampleModal').appendTo("body").modal('show');
+
+                    }
+
                     //Access Webcam
                     async function init(){
                         try{
@@ -278,6 +312,10 @@ https://templatemo.com/tm-543-breezed
         });
 
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   </body>
 </html>
