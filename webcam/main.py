@@ -7,6 +7,8 @@ import string
 import random
 import os.path
 from os import path
+from load import predict_waste
+from transform_image import transform
 #def setuparduino():
 #	arduino = serial.Serial(port='COM3', baudrate=9600, timeout=.1) 
 #	print("Setting up arduino....")
@@ -40,18 +42,21 @@ def index():
 @app.route('/handleimage',methods =['POST'])
 def handleimage():
     if request.method == 'POST':
-        print(type(request.form['file']))
-        print("here")
+        #print(type(request.form['file']))
         #movebiodegradabe()
         S = 10   
         # call random.choices() string module to find the string in lowercase + numeric data.  
         ran = ''.join(random.choices(string.ascii_lowercase+ string.digits, k = S))+'.png' 
         while path.exists(ran) :
             ran = ''.join(random.choices(string.ascii_lowercase+ string.digits, k = S))+'.png' 
-        with open(ran, 'wb') as f:
+        with open("pics_for_prediction/"+ran, 'wb') as f:
             f.write(base64.decodebytes(request.form['file'].split(',')[1].encode()))
-            print("Image name: ",ran)
-        return "Image successfully saved"
+            #print("Image name: ",ran)
+        print("Image name:")
+        trans_ran = transform(ran)
+        print("Transformation Complete")
+        pred = predict_waste(trans_ran)
+        return pred
     return "Get not allowed"
 if __name__ == "__main__":
     app.run(debug=True)
