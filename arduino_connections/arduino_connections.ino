@@ -14,7 +14,7 @@ void loop()
 
     while(Serial.available())
     {
-      myByteArray = Serial.read(); #reading what python script wrote in the communicating serial connection
+      myByteArray = Serial.read(); #reading what python script wrote in the communicating port
       if(myByteArray=='1')
       {
         for(i=59; i!=20; i--)   #tilting the platform left
