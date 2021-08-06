@@ -10,8 +10,6 @@ The user can browse the device for pictures and on uploading the picuture, get t
 ### Miscellaneous  
 There are 2 static pages namely About Us and Model Info. The About Us page talks about our motivation and inspiration for this project and the current method being employed to segregate waste. The Model Info talks about the model we've used and sheds some light on the dataset.  
 
-##  
-
 ## Requirements:   
 • Arduino IDE  
 • Installation of _**fastai, flask,jsonify,base64,numpy, cv2**_      
