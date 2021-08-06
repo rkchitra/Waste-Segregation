@@ -13,13 +13,6 @@
         .modal-backdrop {
   z-index: -1;
 }
-
- .modal:nth-of-type(even) {
-    z-index: 1052 !important;
-}
-.modal-backdrop.show:nth-of-type(even) {
-    z-index: 1051 !important;
-}
     </style>
 
     <title>Capture Image</title>
@@ -128,10 +121,13 @@ https://templatemo.com/tm-543-breezed
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Re-take</button>
                             <input type="button" value="Submit" class="btn btn-success" onclick="upload()">
+
                           </div>
                         </div>
                       </div>
                     </div>
+
+
                     
                 </div> <br><br>
             
@@ -154,22 +150,10 @@ https://templatemo.com/tm-543-breezed
             
 
                     function modal_fun() {
-                        $(".modal-fade").modal('show');
-                        $(".modal-backdrop").add();
                         $('#exampleModal').appendTo("body").modal('show');
 
                     }
 
-                    function modal_fun2() {
-                        $('#exampleModal').modal('hide')
-                        $('#Modal2').appendTo("body").modal('show');
-
-                    }
-                    function close_mod() {
-                         $(".modal-fade").modal("hide");
-                         $(".body").show()
-
-                    }
                     //Access Webcam
                     async function init(){
                         try{

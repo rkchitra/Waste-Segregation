@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <title>Automated Waste Segregation</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&family=Open+Sans&family=Staatliches&display=swap" rel="stylesheet">
+  <script src="https://use.fontawesome.com/c8f51b1d79.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"/>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<style type="text/css">
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to left, #000000 0%, #006699 100%);
+  }
+  .modal-body{
+    font-family: 'Merriweather', serif;
+    
+  }
+  .modal{
+    border-radius: 35px;
+  }
+  /* Split the screen in half */
+  .split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  /* Control the left side */
+  .left {
+    left: 0;
+  }
+  /* Control the right side */
+  .right {
+    right: 0;
+  }
+  .navbar-inner {
+    height: 40px;
+  }
+
+
+  /* Styling the input file */
+  label {
+   cursor: pointer;
+   padding: 0;
+   /* Style as you please, it will become the visible UI component. */
+}
+
+#inp_file {
+   opacity: 0;
+   position: absolute;
+   z-index: -1;
+}
+</style>
+<!-- <body style="background-image: url('/static/images/bg.jpg');"> --> 
+  <body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark py-3" style="background-color: black;">
+      <a class="navbar-brand" href="#">Automated Waste Segregation <i class="fa fa-recycle"></i></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown inline">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: larger;">
+              Segregate
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black;color: white;">
+              <a class="dropdown-item active" href="{{url_for('index')}}" style="color: white;background-color: black;">Capture Image</a>
+              <a class="dropdown-item" href="{{url_for('upload')}}" style="color: white; background-color: black;">Upload Image</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+        <ul class="navbar-nav" style="margin-left: 55%;">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('about')}}" style="font-size: larger;">About Us<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" style="">
+            <a class="nav-link" href="{{url_for('minfo')}}" style="font-size: larger;">Model Info</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- CARD -->
+    <div class="card" style="width: 60rem;height: 35rem;margin-left: 300px;margin-top: 30px;border-radius: 15px;">
+  <div class="card-body">
+    <h2 class="card-title" style="margin-left: 350px;">About Us</h2>
+    <hr style="height:3px;border:none;color:black;background-color:black;" />
+    <div class="container-fluid">
+    	<div class="row">
+    		<div class="col-lg-8">
+    			<p class="card-text" style="font-size: 19px;">We are final year students from the Department of Computer Science and Engineering, The National Institute of Engineering, Mysore. We aim to help the coporation in automating the process of waste segregation by building a prototype that is able to identify a waste material as biodegradable or non-biodegradable efficiently and push it into the appropriate bin accordingly. Our site has an additional functionality where you can upload images and get them classified. <a href="{{url_for('minfo')}}">Learn more about the Model</a></p> 
+    				<p class="card-text" style="font-size: 19px;">Ragpickers collect recyclables from dump yards and sustain themselves by collecting, sorting and segregating waste and then trading it. They help clean up a significant proportion of the 62 million tonnes of waste generated annually in India. Currently, Rag pickers have to do this task manually, leading to the birth of many diseases due to the unhygenic working conditions. We strive to eliminate this procedure by automating the process.</p>
+    			
+    		</div>
+    		<div class="col-lg-4">
+    			<img src="/static/images/dumpyard.jpg"/>
+    			<p style="margin-left: 25px;"><i>Tonnes of waste in dumpyards</i> </p>
+
+    			<img src="/static/images/ragpicks.jpg"/>
+    			<p style="margin-left: 15px;"><i>Waste being manually segregated</i> </p>
+    			
+    		</div>
+    		
+    	</div>
+    	
+    </div>
+    
+    
+  </div>
+</div>
+ 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  </html>

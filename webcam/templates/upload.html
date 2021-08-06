@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <title>Automated Waste Segregation</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&family=Open+Sans&family=Staatliches&display=swap" rel="stylesheet">
+  <script src="https://use.fontawesome.com/c8f51b1d79.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"/>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<style type="text/css">
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to left, #000000 0%, #006699 100%);
+
+  }
+  .modal-body{
+    font-family: 'Merriweather', serif;
+    
+  }
+  .modal{
+    border-radius: 35px;
+  }
+  /* Split the screen in half */
+  .split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  /* Control the left side */
+  .left {
+    left: 0;
+  }
+  /* Control the right side */
+  .right {
+    right: 0;
+  }
+  .navbar-inner {
+    height: 40px;
+  }
+
+
+  /* Styling the input file */
+  label {
+   cursor: pointer;
+   padding: 0;
+   /* Style as you please, it will become the visible UI component. */
+}
+
+#inp_file {
+   opacity: 0;
+   position: absolute;
+   z-index: -1;
+}
+</style>
+<!-- <body style="background-image: url('/static/images/bg.jpg');"> --> 
+  <body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark py-3" style="background-color: black;">
+      <a class="navbar-brand" href="#">Automated Waste Segregation <i class="fa fa-recycle"></i></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown inline active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: larger;">
+              Segregate
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black;color: white;">
+              <a class="dropdown-item active" href="{{url_for('index')}}" style="color: white;background-color: black;">Capture Image</a>
+              <a class="dropdown-item" href="{{url_for('upload')}}" style="color: white; background-color: #006699;">Upload Image</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+        <ul class="navbar-nav" style="margin-left: 55%;">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('about')}}" style="font-size: larger;">About Us<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" style="">
+            <a class="nav-link" href="{{url_for('minfo')}}" style="font-size: larger;">Model Info</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+    <h1 style="text-align: center;color: white;">Automated Waste Segregation</h1> 
+    
+
+    <!-- CARD -->
+
+    <div class="card" style="width: 30rem;height: 30rem;margin-left: 33%; margin-top: 2%;border-radius: 15px;">
+  <img class="card-img-top" src="/static/images/file-upload.png" alt="Card image cap" style="height: 250px;width: 250px;margin-left: 20%;">
+  <hr>
+  <div class="card-body" style="border-radius: 15px;">
+    <h5 class="card-title"><b>Upload Image</b></h5>
+    <p class="card-text" style="font-size: larger;">Browse for files from your system and upload for prediction.</p>
+    <form method = "POST" enctype = "multipart/form-data" id="myForm">
+      <div class="container-fluid">
+        <div class="row">
+        <div class="col-lg-8">
+         <label for="inp_file" class="btn btn-primary btn-lg" style="border-radius: 10px;">Browse <i class="fa fa-upload"></i></label>
+         <input type = "file" name = "file" id="inp_file" onchange='uploadFile(this)' /> 
+         <span id="file-name"></span>
+       </div>
+         <div class="col-lg-4">
+          <button id = "buttonmodal2" type="button" value="Submit" class="btn btn-success btn-lg" onclick="upload()" style="border-radius: 10px;">Submit</button> 
+         </div>
+       </div>
+     </div>
+      </form> 
+  </div>
+</div>
+
+ <!-- Modal that contains Prediction -->
+  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="margin-top: 10%;">
+      <div class="modal-content" style="border-radius: 15px;">
+        <div class="modal-header font-weight-bold">
+          <h1 class="modal-title font-weight-bold" id="exampleModalLabel" style="margin-left: 37%;">Prediction</h1>
+          <hr style="height: 12px;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="border-radius: 15px;">
+          <!-- Picture -->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-6">
+            <!-- <img src="{{url_for('static',filename = 'burger.jpg')}}"/> -->
+            <img id="myImage" src="/static/images/pizza.jpg" width="300" height="200" />
+            </div>
+            <div class="col-lg-6" style="font-size: 24px;">
+              The waste material has been classified as: <b><p id="pred_val" style="color: style_func();"></p></b> 
+            </div>
+            
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+    <script type="text/javascript">
+
+      function upload() {
+                      console.log("Uploading...");
+                      var xhtml_text,modal_text1;
+                      var temp = "$";
+                      var form = document.getElementById('myForm');
+                      var formData = new FormData(form);
+                    formData.append("file", inp_file); //key-value pair
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.open("POST", "/uploader");
+                    // check when state changes
+                    xmlhttp.onreadystatechange = function() {
+                      if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        xhtml_text = xmlhttp.responseText;
+                        temp = xhtml_text[0];
+                        if(xhtml_text[0] == 'n')
+                         { modal_text1 = "Non-Biodegradable";
+                           modal_text1 = modal_text1.fontcolor("brown");
+                         }
+                        else
+                        {
+                          modal_text1 = "Biodegradable";
+                          modal_text1 = modal_text1.fontcolor("green");
+                        }
+                        xhtml_text = "static/pics_for_prediction/"+xhtml_text.substring(1);
+                       //$('#exampleModal2').find('.modal-body p').text(modal_text1);
+                        document.getElementById("pred_val").innerHTML = modal_text1;
+                        document.getElementById("myImage").src = xhtml_text;
+                       // x.textContent = xmlhttp.responseText;
+                        $('#exampleModal2').modal('toggle');
+
+                     if(temp != '$')
+                     {
+                       //call movebiodegradable() or nonbiodegradable() method here 
+                       if(temp == 'n')
+                       {
+                         $.ajax({
+                            url: '/nonbio',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: function(data){
+                                alert("DONE!");
+                           }
+                         });
+                       }
+                       else
+                       {
+                         $.ajax({
+                            url: '/bio',
+                            dataType: 'JSON',
+                            type: 'GET',
+                            success: function(data){
+                                alert("DONE!");
+                           }
+                         });                     }
+           
+                        }
+
+                      }
+
+                    }
+
+
+                    xmlhttp.send(formData);
+                    console.log(formData.get('file'));
+                    console.log(formData.get('userID'));
+
+
+
+
+                  }
+
+            function uploadFile(target) {
+    document.getElementById("file-name").innerHTML = target.files[0].name;
+}
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  </html>
