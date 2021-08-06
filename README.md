@@ -11,10 +11,14 @@ The user can browse the device for pictures and on uploading the picuture, get t
 There are 2 static pages namely About Us and Model Info. The About Us page talks about our motivation and inspiration for this project and the current method being employed to segregate waste. The Model Info talks about the model we've used and sheds some light on the dataset.  
 
 ## Requirements:   
-• Installation of fastai    
-• Installation of the following modules: pathlib,glob2,sklearn,pandas,numpy,zipfile,shutil,re,seaborn (to train the model)   
+• Installation of fastai, flask,jsonify,base64,numpy, cv2      
+• Installation of the following modules: pathlib,glob2,sklearn,pandas,numpy,zipfile,shutil,re,seaborn (to train the model)  
+• Connection of Arduino board and laptop using Arduino USB cable  
+• Connection of Arduino board and motor using jumper cables  
+• Attach motor to platform in a way that is suitable for rotation  
 
 ## Running the Project:   
+• Check arudino connections using Arduino IDE to check which port it has been connected to and modify accordingly if required in the arduino_connections.ino file, which can be found in the arduino_connections folder  
 • Go to the project folder in command prompt and go to the folder named webcam  
 • In command prompt, run the following command (without double quotes): "python main.py"  
 • Open a web browser and go to http://localhost:5000 to view and run the project  
