@@ -21,5 +21,5 @@ There are 2 static pages namely About Us and Model Info. The About Us page talks
 ## Running the Project:   
 • Check arudino connections using Arduino IDE to check which port it has been connected to and modify accordingly if required in the arduino_connections.ino file, which can be found in the arduino_connections folder  
 • Go to the project folder in command prompt and go to the folder named webcam  
-• In command prompt, run the following command (without double quotes): "python main.py"  
+• In command prompt, run the following command (without double quotes): _"python main.py"_  
 • Open a web browser and go to http://localhost:5000 to view and run the project  
