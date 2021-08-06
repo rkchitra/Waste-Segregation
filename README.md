@@ -15,7 +15,7 @@ There are 2 static pages namely About Us and Model Info. The About Us page talks
 ## Requirements:   
 • Arduino IDE  
 • Installation of _**fastai, flask,jsonify,base64,numpy, cv2**_      
-• Installation of the following modules: _**pathlib,glob2,sklearn,pandas,numpy,zipfile,shutil,re,seaborn**_ (to train the model)
+• Installation of the following modules: _**pathlib,glob2,sklearn,pandas,numpy,zipfile,shutil,re,seaborn**_ (to train the model)    
 • Connection of Arduino board and laptop using Arduino USB cable  
 • Connection of Arduino board and motor using jumper cables  
 • Attach motor to platform in a way that is suitable for rotation  
